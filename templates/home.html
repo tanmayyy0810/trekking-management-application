@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+<div class="hero text-center">
+
+    <h1 class="display-4">
+        Trekking Management System
+    </h1>
+
+    <p class="text-muted mt-3">
+        Plan • Manage • Explore
+    </p>
+
+    <div class="mt-5">
+
+        <a href="{{ url_for('auth.choose_login') }}"
+           class="btn btn-success btn-lg me-3">
+
+            Login
+
+        </a>
+
+        <a href="{{ url_for('auth.choose_register') }}"
+           class="btn btn-outline-success btn-lg">
+
+            Register
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}
+Choose Register
+{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+<div class="col-md-6">
+
+<div class="card shadow">
+
+<div class="card-header bg-success text-white">
+
+<h3 class="text-center">
+
+Register As
+
+</h3>
+
+</div>
+
+<div class="card-body d-grid gap-3">
+
+<a href="{{ url_for('auth.trekker_register') }}"
+class="btn btn-success">
+
+Trekker
+
+</a>
+
+<a href="{{ url_for('auth.staff_register') }}"
+class="btn btn-warning">
+
+Trek Staff
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

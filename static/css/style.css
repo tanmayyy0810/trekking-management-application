@@ -1,0 +1,33 @@
+body{
+    background-color:#f8f9fa;
+}
+
+.navbar-brand{
+    font-weight:bold;
+}
+
+.card{
+    border:none;
+    border-radius:12px;
+}
+
+.card-header{
+    font-size:22px;
+    font-weight:bold;
+}
+
+.btn{
+    border-radius:8px;
+}
+
+.hero{
+    padding:80px 0;
+}
+
+.hero h1{
+    font-weight:bold;
+}
+
+.hero p{
+    font-size:20px;
+}
