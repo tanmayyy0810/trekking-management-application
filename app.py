@@ -12,6 +12,7 @@ from routes.admin import admin
 from routes.staff import staff
 from routes.trekker import trekker
 
+
 app = Flask(__name__)
 
 app.config.from_object(Config)

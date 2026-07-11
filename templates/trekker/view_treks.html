@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}
+Available Treks
+{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">
+Available Treks
+</h2>
+
+{% if treks %}
+
+<div class="row">
+
+{% for trek in treks %}
+
+<div class="col-md-4 mb-4">
+
+<div class="card shadow h-100">
+
+<div class="card-body">
+
+<h4>{{ trek.trek_name }}</h4>
+
+<p><strong>Location:</strong> {{ trek.location }}</p>
+
+<p><strong>Difficulty:</strong> {{ trek.difficulty }}</p>
+
+<p><strong>Duration:</strong> {{ trek.duration }} Days</p>
+
+<p><strong>Slots:</strong> {{ trek.available_slots }}</p>
+
+</div>
+
+</div>
+
+</div>
+<div class="mt-3">
+
+<a
+href="{{ url_for('trekker.trek_details', trek_id=trek.id) }}"
+class="btn btn-success w-100">
+
+View Details
+
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="alert alert-warning">
+
+No approved treks available.
+
+</div>
+
+{% endif %}
+
+{% endblock %}

@@ -22,7 +22,10 @@ class Trek(db.Model):
 
     end_date = db.Column(db.Date, nullable=False)
 
-    status = db.Column(db.String(20), default="Pending")
+    status = db.Column(
+        db.String(20),
+        default="Open"
+    )
 
     assigned_staff_id = db.Column(
         db.Integer,

@@ -1,11 +1,89 @@
 {% extends "base.html" %}
 
-{% block title %}Trekker Dashboard{% endblock %}
+{% block title %}
+Trekker Dashboard
+{% endblock %}
 
 {% block content %}
 
-<h2>Welcome Trekker</h2>
+<h2 class="mb-4">
 
-<p>You are logged in as Trekker.</p>
+Welcome {{ current_user.name }}
+
+</h2>
+
+<div class="row">
+
+<div class="col-md-6">
+
+<div class="card shadow">
+
+<div class="card-body text-center">
+
+<h5>
+
+Available Treks
+
+</h5>
+
+<h2>
+
+{{ available_treks }}
+
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-6">
+
+<div class="card shadow">
+
+<div class="card-body text-center">
+
+<h5>
+
+My Bookings
+
+</h5>
+
+<h2>
+
+{{ total_bookings }}
+
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<hr>
+
+<div class="mt-4">
+
+<a
+href="{{ url_for('trekker.view_treks') }}"
+class="btn btn-success">
+
+Browse Treks
+
+</a>
+
+<a
+href="{{ url_for('trekker.my_bookings') }}"
+class="btn btn-primary">
+
+My Bookings
+
+</a>
+
+</div>
 
 {% endblock %}
