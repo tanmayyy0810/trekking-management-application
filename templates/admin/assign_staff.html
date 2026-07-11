@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}
+Assign Staff
+{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+<div class="col-md-6">
+
+<div class="card shadow">
+
+<div class="card-header bg-success text-white">
+
+<h3>Assign Staff</h3>
+
+</div>
+
+<div class="card-body">
+
+<h5 class="mb-3">
+
+Trek:
+<strong>{{ trek.trek_name }}</strong>
+
+</h5>
+
+<form method="POST">
+
+<div class="mb-3">
+
+<label>Select Staff</label>
+
+<select
+class="form-select"
+name="staff_id"
+required>
+
+{% for staff in staff_members %}
+
+<option value="{{ staff.id }}">
+
+{{ staff.user.name }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<button
+class="btn btn-success">
+
+Assign Staff
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

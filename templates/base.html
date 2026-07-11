@@ -26,13 +26,18 @@
 
             {% if current_user.is_authenticated %}
 
-            <a
-            href="{{ url_for('auth.logout') }}"
-            class="btn btn-light">
+            <div class="d-flex justify-content-between mb-3">
 
-            Logout
+   
 
-            </a>
+    <a href="{{ url_for('auth.logout') }}"
+       class="btn btn-danger">
+
+        Logout
+
+    </a>
+
+</div>
 
             {% endif %}
 

@@ -62,6 +62,16 @@ def staff_login():
 
         if user and user.check_password(password):
 
+            # Check if user is blacklisted
+            if user.is_blacklisted:
+
+                flash(
+                    "Your account has been blacklisted. Please contact the administrator.",
+                    "danger"
+                )
+
+                return redirect(url_for("auth.staff_login"))
+
             profile = StaffProfile.query.filter_by(
                 user_id=user.id
             ).first()
@@ -72,8 +82,8 @@ def staff_login():
                     "Your account is awaiting Admin approval.",
                     "warning"
                 )
-
                 return redirect(url_for("auth.staff_login"))
+            
 
             login_user(user)
 
@@ -102,8 +112,19 @@ def trekker_login():
             role="trekker"
 
         ).first()
+        
+
+
 
         if user and user.check_password(password):
+            if user.is_blacklisted:
+
+                flash(
+                    "Your account has been blacklisted by the administrator.",
+                    "danger"
+                )
+
+                return redirect(url_for("auth.trekker_login"))
 
             login_user(user)
 

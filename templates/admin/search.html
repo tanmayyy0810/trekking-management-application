@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}
+Search
+{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">Search</h2>
+
+<div class="card shadow mb-4">
+
+<div class="card-body">
+
+<form method="POST">
+
+<div class="row">
+
+<div class="col-md-4">
+
+<select
+name="search_type"
+class="form-select">
+
+<option value="trek">Treks</option>
+
+<option value="staff">Staff</option>
+
+<option value="user">Users</option>
+
+</select>
+
+</div>
+
+<div class="col-md-6">
+
+<input
+type="text"
+name="keyword"
+class="form-control"
+placeholder="Enter Name or ID"
+required>
+
+</div>
+
+<div class="col-md-2">
+
+<button
+class="btn btn-success w-100">
+
+Search
+
+</button>
+
+</div>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+{% if results %}
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<table class="table table-bordered">
+
+<thead class="table-success">
+
+{% if search_type=="trek" %}
+
+<tr>
+
+<th>ID</th>
+<th>Name</th>
+<th>Location</th>
+<th>Status</th>
+
+</tr>
+
+{% elif search_type=="staff" %}
+
+<tr>
+
+<th>ID</th>
+<th>Name</th>
+<th>Phone</th>
+<th>Status</th>
+
+</tr>
+
+{% else %}
+
+<tr>
+
+<th>ID</th>
+<th>Name</th>
+<th>Email</th>
+<th>Status</th>
+
+</tr>
+
+{% endif %}
+
+</thead>
+
+<tbody>
+
+{% for item in results %}
+
+{% if search_type=="trek" %}
+
+<tr>
+
+<td>{{ item.id }}</td>
+<td>{{ item.trek_name }}</td>
+<td>{{ item.location }}</td>
+<td>{{ item.status }}</td>
+
+</tr>
+
+{% elif search_type=="staff" %}
+
+<tr>
+
+<td>{{ item.user.id }}</td>
+<td>{{ item.user.name }}</td>
+<td>{{ item.phone }}</td>
+<td>{{ item.approval_status }}</td>
+
+</tr>
+
+{% else %}
+
+<tr>
+
+<td>{{ item.id }}</td>
+<td>{{ item.name }}</td>
+<td>{{ item.email }}</td>
+<td>
+{% if item.is_blacklisted %}
+Blacklisted
+{% else %}
+Active
+{% endif %}
+</td>
+
+</tr>
+
+{% endif %}
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

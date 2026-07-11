@@ -23,6 +23,12 @@ class StaffProfile(db.Model):
         default="Pending"
     )
 
+    # user = db.relationship(
+    #     "User",
+    #     backref="staff_profile",
+    #     uselist=False
+    # )
+
     assigned_treks = db.relationship(
         "Trek",
         backref="staff",

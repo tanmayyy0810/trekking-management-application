@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}
+View Bookings
+{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">
+All Trek Bookings
+</h2>
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<table class="table table-bordered table-hover">
+
+<thead class="table-success">
+
+<tr>
+
+<th>Booking ID</th>
+<th>Trekker</th>
+<th>Trek</th>
+<th>People</th>
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for booking in bookings %}
+
+<tr>
+
+<td>{{ booking.id }}</td>
+
+<td>{{ booking.user.name }}</td>
+
+<td>{{ booking.trek.trek_name }}</td>
+
+<td>{{ booking.number_of_people }}</td>
+
+<td>
+
+{% if booking.status=="Confirmed" %}
+
+<span class="badge bg-success">
+
+Confirmed
+
+</span>
+
+{% elif booking.status=="Cancelled" %}
+
+<span class="badge bg-danger">
+
+Cancelled
+
+</span>
+
+{% else %}
+
+<span class="badge bg-warning text-dark">
+
+Pending
+
+</span>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+{% else %}
+
+<tr>
+
+<td colspan="5" class="text-center">
+
+No Bookings Found
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+{% endblock %}
