@@ -22,7 +22,7 @@ login_manager = LoginManager()
 
 login_manager.init_app(app)
 
-login_manager.login_view = "auth.login"
+login_manager.login_view = "auth.choose_login"
 
 app.register_blueprint(auth)
 app.register_blueprint(admin)
@@ -43,6 +43,26 @@ def load_user(user_id):
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
+
+        admin = User.query.filter_by(
+            email="admin@gmail.com"
+        ).first()
+
+        if not admin:
+
+            admin = User(
+                name="Administrator",
+                email="admin@gmail.com",
+                role="admin"
+            )
+
+            admin.set_password("admin123")
+
+            db.session.add(admin)
+            db.session.commit()
+
+            print("Default admin created.")
+
         print("Database created successfully!")
 
     app.run(debug=True)

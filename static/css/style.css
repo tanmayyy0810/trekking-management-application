@@ -1,33 +1,549 @@
+:root{
+
+--primary:#556B2F;
+--secondary:#2F5233;
+--accent:#F5F1E8;
+--background:#F8F8F6;
+--text:#2D2D2D;
+
+}
+
 body{
-    background-color:#f8f9fa;
+
+font-family:'Poppins',sans-serif;
+
+background:var(--background);
+
+color:var(--text);
+
+}
+
+/* Navbar */
+
+.custom-navbar{
+
+background:white;
+
+box-shadow:0 4px 15px rgba(0,0,0,.08);
+
+padding:14px;
+
 }
 
 .navbar-brand{
-    font-weight:bold;
+
+color:var(--primary)!important;
+
+font-size:28px;
+
 }
+
+.welcome-text{
+
+font-weight:600;
+
+color:var(--secondary);
+
+}
+
+/* Cards */
 
 .card{
-    border:none;
-    border-radius:12px;
+
+border:none;
+
+border-radius:12px;
+
+overflow:hidden;
+
+transition:.3s;
+
+box-shadow:0 5px 18px rgba(0,0,0,.08);
+
 }
 
-.card-header{
-    font-size:22px;
-    font-weight:bold;
+.card:hover{
+
+transform:translateY(-6px);
+
+box-shadow:0 12px 25px rgba(0,0,0,.12);
+
 }
 
-.btn{
-    border-radius:8px;
+.card img{
+
+transition:.4s;
+
 }
 
-.hero{
-    padding:80px 0;
+.card:hover img{
+
+transform:scale(1.05);
+
 }
 
-.hero h1{
-    font-weight:bold;
+/* Buttons */
+
+.btn-custom{
+
+background:var(--primary);
+
+color:white;
+
+border:none;
+
+border-radius:8px;
+
+padding:10px 22px;
+
+transition:.3s;
+
 }
 
-.hero p{
-    font-size:20px;
+.btn-custom:hover{
+
+background:var(--secondary);
+
+color:white;
+
+}
+
+/* Inputs */
+
+.form-control,
+
+.form-select{
+
+border-radius:8px;
+
+padding:12px;
+
+}
+
+.form-control:focus{
+
+border-color:var(--primary);
+
+box-shadow:none;
+
+}
+
+/* Tables */
+
+.table{
+
+background:white;
+
+border-radius:12px;
+
+overflow:hidden;
+
+}
+
+/* Dashboard cards */
+
+.dashboard-card{
+
+padding:30px;
+
+text-align:center;
+
+background:white;
+
+border-radius:12px;
+
+transition:.3s;
+
+}
+
+.dashboard-card:hover{
+
+transform:translateY(-5px);
+
+}
+
+.dashboard-card h2{
+
+font-size:40px;
+
+color:var(--primary);
+
+}
+
+.dashboard-card h5{
+
+color:#666;
+
+}
+
+/* Badges */
+
+.badge{
+
+padding:8px 12px;
+
+font-size:14px;
+
+}
+.dashboard-card{
+
+background:white;
+
+padding:30px;
+
+border-radius:14px;
+
+text-align:center;
+
+box-shadow:0 5px 18px rgba(0,0,0,.08);
+
+transition:.3s;
+
+height:100%;
+
+}
+
+.dashboard-card:hover{
+
+transform:translateY(-8px);
+
+box-shadow:0 15px 30px rgba(0,0,0,.15);
+
+}
+
+.dashboard-card h1{
+
+font-size:45px;
+
+margin-bottom:15px;
+
+}
+
+.dashboard-card h2{
+
+font-size:38px;
+
+font-weight:700;
+
+color:#556B2F;
+
+}
+
+.dashboard-card h5{
+
+font-weight:600;
+
+}
+.hero-banner{
+
+height:320px;
+
+border-radius:18px;
+
+overflow:hidden;
+
+background-image:url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1800");
+
+background-size:cover;
+
+background-position:center;
+
+position:relative;
+
+box-shadow:0 10px 30px rgba(0,0,0,.15);
+
+}
+
+.hero-overlay{
+
+position:absolute;
+
+inset:0;
+
+background:rgba(0,0,0,.45);
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+padding:60px;
+
+color:white;
+
+}
+
+.hero-overlay h1{
+
+font-size:46px;
+
+font-weight:700;
+
+}
+
+.hero-overlay p{
+
+font-size:20px;
+
+margin-top:10px;
+
+}
+
+/* Trek Cards */
+
+.trek-card{
+
+background:white;
+
+border-radius:18px;
+
+overflow:hidden;
+
+box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+transition:.35s;
+
+height:100%;
+
+}
+
+.trek-card:hover{
+
+transform:translateY(-10px);
+
+box-shadow:0 18px 40px rgba(0,0,0,.15);
+
+}
+
+.trek-image{
+
+position:relative;
+
+overflow:hidden;
+
+height:240px;
+
+}
+
+.trek-image img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+transition:.5s;
+
+}
+
+.trek-card:hover img{
+
+transform:scale(1.08);
+
+}
+
+.price-tag{
+
+color:#155724;
+
+margin-bottom:15px;
+font-size:25px;
+
+}
+
+.trek-content{
+
+padding:22px;
+
+}
+
+.location{
+
+color:#777;
+
+margin-bottom:15px;
+
+}
+
+.trek-info{
+
+display:flex;
+
+justify-content:space-between;
+
+margin-bottom:15px;
+
+font-size:15px;
+
+}
+
+.slots{
+
+font-weight:600;
+
+color:#444;
+
+}
+
+.difficulty{
+
+padding:5px 12px;
+
+border-radius:20px;
+
+font-size:14px;
+
+font-weight:600;
+
+}
+
+.easy{
+
+background:#d4edda;
+
+color:#155724;
+
+}
+
+.moderate{
+
+background:#fff3cd;
+
+color:#856404;
+
+}
+
+.hard{
+
+background:#f8d7da;
+
+color:#721c24;
+
+}
+/* Hero Banner */
+
+.trek-hero{
+
+height:350px;
+
+background-image:url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1800");
+
+background-size:cover;
+
+background-position:center;
+
+border-radius:20px;
+
+position:relative;
+
+overflow:hidden;
+
+box-shadow:0 15px 35px rgba(0,0,0,.15);
+
+}
+
+.trek-hero-overlay{
+
+position:absolute;
+
+inset:0;
+
+background:rgba(0,0,0,.45);
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+padding:60px;
+
+color:white;
+
+}
+
+.trek-hero-overlay h1{
+
+font-size:52px;
+
+font-weight:700;
+
+margin-bottom:15px;
+
+}
+
+.trek-hero-overlay p{
+
+font-size:20px;
+
+opacity:.95;
+
+}
+
+/* Floating Search Card */
+
+.search-card{
+
+background:white;
+
+border-radius:18px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+margin-top:-70px;
+
+position:relative;
+
+z-index:10;
+
+}
+
+.detail-image{
+
+width:100%;
+
+height:500px;
+
+object-fit:cover;
+
+border-radius:18px;
+
+box-shadow:0 10px 25px rgba(0,0,0,.15);
+
+}
+
+.detail-card{
+
+background:white;
+
+padding:35px;
+
+border-radius:18px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+height:100%;
+
+}
+
+.detail-card h2{
+
+font-weight:700;
+
+margin-bottom:10px;
+
+}
+
+.price{
+
+color:#556B2F;
+
+font-size:34px;
+
+font-weight:700;
+
+margin-bottom:20px;
+
 }

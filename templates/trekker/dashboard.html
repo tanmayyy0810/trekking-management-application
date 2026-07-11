@@ -6,33 +6,42 @@ Trekker Dashboard
 
 {% block content %}
 
-<h2 class="mb-4">
+<!-- Welcome Banner -->
+<div class="hero-banner mb-5">
 
-Welcome {{ current_user.name }}
+    <div class="hero-overlay">
 
-</h2>
+        <h1>
+            Welcome,
+            {{ current_user.name }}
+        </h1>
 
-<div class="row">
+        <p>
+            Ready for your next adventure?
+        </p>
+
+        <a href="{{ url_for('trekker.view_treks') }}"
+           class="btn btn-custom mt-2">
+
+            Explore Treks
+
+        </a>
+
+    </div>
+
+</div>
+
+<!-- Statistics -->
+
+<div class="row g-4 mb-5">
 
 <div class="col-md-6">
 
-<div class="card shadow">
+<div class="dashboard-card">
 
-<div class="card-body text-center">
+<h5>Available Treks</h5>
 
-<h5>
-
-Available Treks
-
-</h5>
-
-<h2>
-
-{{ available_treks }}
-
-</h2>
-
-</div>
+<h2>{{ available_treks }}</h2>
 
 </div>
 
@@ -40,21 +49,11 @@ Available Treks
 
 <div class="col-md-6">
 
-<div class="card shadow">
+<div class="dashboard-card">
 
-<div class="card-body text-center">
+<h5>My Bookings</h5>
 
-<h5>
-
-My Bookings
-
-</h5>
-
-<h2>
-
-{{ total_bookings }}
-
-</h2>
+<h2>{{ total_bookings }}</h2>
 
 </div>
 
@@ -62,27 +61,82 @@ My Bookings
 
 </div>
 
+<!-- Quick Actions -->
+
+<h3 class="mb-4">
+Quick Actions
+</h3>
+
+<div class="row g-4">
+
+<div class="col-lg-4">
+
+<a href="{{ url_for('trekker.view_treks') }}"
+class="text-decoration-none">
+
+<div class="dashboard-card">
+
+<h1>🏔️</h1>
+
+<h4>Explore Treks</h4>
+
+<p class="text-muted">
+
+Browse all available adventures.
+
+</p>
+
 </div>
-
-<hr>
-
-<div class="mt-4">
-
-<a
-href="{{ url_for('trekker.view_treks') }}"
-class="btn btn-success">
-
-Browse Treks
 
 </a>
 
-<a
-href="{{ url_for('trekker.my_bookings') }}"
-class="btn btn-primary">
+</div>
 
-My Bookings
+<div class="col-lg-4">
+
+<a href="{{ url_for('trekker.my_bookings') }}"
+class="text-decoration-none">
+
+<div class="dashboard-card">
+
+<h1>🎒</h1>
+
+<h4>My Bookings</h4>
+
+<p class="text-muted">
+
+View all your booked treks.
+
+</p>
+
+</div>
 
 </a>
+
+</div>
+
+<div class="col-lg-4">
+
+<a href="{{ url_for('home') }}"
+class="text-decoration-none">
+
+<div class="dashboard-card">
+
+<h1>🌍</h1>
+
+<h4>Discover</h4>
+
+<p class="text-muted">
+
+Find your next destination.
+
+</p>
+
+</div>
+
+</a>
+
+</div>
 
 </div>
 

@@ -6,35 +6,75 @@ Trek Details
 
 {% block content %}
 
-<h2 class="mb-4">
 
-{{ trek.trek_name }}
+<div class="container">
 
-</h2>
+<div class="row">
 
-<div class="card shadow">
+<div class="col-lg-7">
+    <a href="{{ url_for('trekker.view_treks') }}"
+class="btn btn-outline-secondary mb-4">
 
-<div class="card-body">
+← Back to Treks
 
-<p><strong>Location:</strong> {{ trek.location }}</p>
+</a>
 
-<p><strong>Difficulty:</strong> {{ trek.difficulty }}</p>
+<img src="{{ trek.image_url }}"
+class="detail-image">
 
-<p><strong>Duration:</strong> {{ trek.duration }} Days</p>
+</div>
 
-<p><strong>Available Slots:</strong> {{ trek.available_slots }}</p>
+<div class="col-lg-5">
 
-<p><strong>Start Date:</strong> {{ trek.start_date }}</p>
+<div class="detail-card">
 
-<p><strong>End Date:</strong> {{ trek.end_date }}</p>
+<h2>{{ trek.trek_name }}</h2>
 
-<p><strong>Status:</strong> {{ trek.status }}</p>
+<p class="text-muted">
 
-<p>
-
-<strong>Description:</strong>
+📍 {{ trek.location }}
 
 </p>
+
+<h3 class="price">
+
+₹{{ trek.price }}
+
+</h3>
+
+<div class="mb-3">
+
+<span class="difficulty
+{% if trek.difficulty=='Easy' %}
+easy
+{% elif trek.difficulty=='Moderate' %}
+moderate
+{% else %}
+hard
+{% endif %}
+">
+
+{{ trek.difficulty }}
+
+</span>
+
+<span class="badge bg-secondary">
+
+🕒 {{ trek.duration }} Days
+
+</span>
+
+<span class="badge bg-primary">
+
+👥 {{ trek.available_slots }} Slots
+
+</span>
+
+</div>
+
+<hr>
+
+<h5>Description</h5>
 
 <p>
 
@@ -44,21 +84,47 @@ Trek Details
 
 <hr>
 
+<p>
+
+📅 <strong>Start:</strong>
+
+{{ trek.start_date }}
+
+</p>
+
+<p>
+
+📅 <strong>End:</strong>
+
+{{ trek.end_date }}
+
+</p>
+
+{% if trek.available_slots > 0 %}
+
 <a
 href="{{ url_for('trekker.book_trek', trek_id=trek.id) }}"
-class="btn btn-success">
+class="btn btn-custom btn-lg w-100">
 
-Book Trek
-
-</a>
-
-<a
-href="{{ url_for('trekker.view_treks') }}"
-class="btn btn-secondary">
-
-Back
+Book This Trek
 
 </a>
+
+{% else %}
+
+<button
+class="btn btn-danger btn-lg w-100"
+disabled>
+
+Fully Booked
+
+</button>
+
+{% endif %}
+
+</div>
+
+</div>
 
 </div>
 

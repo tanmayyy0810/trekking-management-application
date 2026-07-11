@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash
+from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 
 from models.trek import Trek
@@ -35,13 +35,43 @@ def view_treks():
         flash("Access Denied!", "danger")
         return redirect(url_for("home"))
 
-    treks = Trek.query.filter_by(status="Open").all()
-    # treks = Trek.query.all()
+    query = Trek.query.filter_by(status="Open")
 
+    # Search
+    search = request.args.get("search", "")
+    if search:
+        query = query.filter(Trek.trek_name.ilike(f"%{search}%"))
+
+    # Location Filter
+    location = request.args.get("location", "")
+    if location:
+        query = query.filter(Trek.location == location)
+
+    # Difficulty Filter
+    difficulty = request.args.get("difficulty", "")
+    if difficulty:
+        query = query.filter(Trek.difficulty == difficulty)
+
+    # Sorting
+    sort = request.args.get("sort", "")
+
+    if sort == "price_low":
+        query = query.order_by(asc(Trek.price))
+
+    elif sort == "price_high":
+        query = query.order_by(desc(Trek.price))
+
+    elif sort == "duration":
+        query = query.order_by(asc(Trek.duration))
+
+    treks = query.all()
+
+    locations = db.session.query(Trek.location).distinct().all()
 
     return render_template(
         "trekker/view_treks.html",
-        treks=treks
+        treks=treks,
+        locations=locations
     )
 
 @trekker.route("/trekker/my-bookings")

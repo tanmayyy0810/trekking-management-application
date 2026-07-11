@@ -10,6 +10,14 @@ class Trek(db.Model):
 
     location = db.Column(db.String(100), nullable=False)
 
+    image_url = db.Column(db.String(500))
+
+    price = db.Column(
+        db.Float,
+        nullable=False,
+        default=0
+    )
+
     difficulty = db.Column(db.String(20), nullable=False)
 
     duration = db.Column(db.Integer, nullable=False)
@@ -21,6 +29,8 @@ class Trek(db.Model):
     start_date = db.Column(db.Date, nullable=False)
 
     end_date = db.Column(db.Date, nullable=False)
+
+    
 
     status = db.Column(
         db.String(20),

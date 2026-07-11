@@ -55,7 +55,9 @@ def create_trek():
 
         trek = Trek(
             trek_name=request.form["name"],
+            image_url=request.form["image_url"],
             location=request.form["location"],
+            price=float(request.form["price"]),
             difficulty=request.form["difficulty"],
             duration=int(request.form["duration"]),
             available_slots=int(request.form["slots"]),

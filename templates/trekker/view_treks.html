@@ -5,43 +5,190 @@ Available Treks
 {% endblock %}
 
 {% block content %}
+<div class="trek-hero mb-5">
 
-<h2 class="mb-4">
-Available Treks
-</h2>
+    <div class="trek-hero-overlay">
 
-{% if treks %}
+        <h1>Find Your Next Adventure</h1>
+
+        <p>
+            Explore breathtaking treks across India.
+        </p>
+
+    </div>
+
+</div>
+<div class="search-card p-4 mb-5">
+
+<form method="GET">
+
+<div class="row g-3">
+
+<div class="col-md-3">
+
+<input
+type="text"
+name="search"
+class="form-control"
+placeholder="Search Trek..."
+value="{{ request.args.get('search','') }}">
+
+</div>
+
+<div class="col-md-2">
+
+<select
+name="location"
+class="form-select">
+
+<option value="">All Locations</option>
+
+{% for loc in locations %}
+
+<option
+value="{{ loc[0] }}"
+{% if request.args.get('location')==loc[0] %}
+selected
+{% endif %}>
+
+{{ loc[0] }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<div class="col-md-2">
+
+<select
+name="difficulty"
+class="form-select">
+
+<option value="">Difficulty</option>
+
+<option value="Easy">Easy</option>
+
+<option value="Moderate">Moderate</option>
+
+<option value="Hard">Hard</option>
+
+</select>
+
+</div>
+
+<div class="col-md-3">
+
+<select
+name="sort"
+class="form-select">
+
+<option value="">Sort By</option>
+
+<option value="price_low">
+Price Low → High
+</option>
+
+<option value="price_high">
+Price High → Low
+</option>
+
+<option value="duration">
+Duration
+</option>
+
+</select>
+
+</div>
+
+<div class="col-md-2">
+
+<button
+class="btn btn-custom w-100">
+
+Search
+
+</button>
+
+</div>
+
+</div>
+
+</form>
+
+</div>
+
+<h2 class="mb-4">Available Treks</h2>
+
 
 <div class="row">
 
 {% for trek in treks %}
+<div class="col-lg-4 col-md-6 mb-4">
 
-<div class="col-md-4 mb-4">
+<div class="trek-card">
 
-<div class="card shadow h-100">
+<div class="trek-image">
 
-<div class="card-body">
+<img src="{{ trek.image_url }}" alt="{{ trek.trek_name }}">
+
+
+
+</div>
+
+<div class="trek-content">
 
 <h4>{{ trek.trek_name }}</h4>
 
-<p><strong>Location:</strong> {{ trek.location }}</p>
+<p class="location">
 
-<p><strong>Difficulty:</strong> {{ trek.difficulty }}</p>
+📍 {{ trek.location }}
 
-<p><strong>Duration:</strong> {{ trek.duration }} Days</p>
+</p>
+<p class="price-tag">
 
-<p><strong>Slots:</strong> {{ trek.available_slots }}</p>
+₹{{ trek.price }}
+
+</p>
+
+
+<div class="trek-info">
+    
+
+<span class="difficulty
+{% if trek.difficulty=='Easy' %}
+easy
+{% elif trek.difficulty=='Moderate' %}
+moderate
+{% else %}
+hard
+{% endif %}
+">
+
+{{ trek.difficulty }}
+
+</span>
+
+<span>
+
+🕒 {{ trek.duration }} Days
+
+</span>
 
 </div>
 
-</div>
+<div class="slots">
+
+👥 {{ trek.available_slots }} Slots Left
 
 </div>
-<div class="mt-3">
 
-<a
-href="{{ url_for('trekker.trek_details', trek_id=trek.id) }}"
-class="btn btn-success w-100">
+<div class="d-grid mt-3">
+
+<a href="{{ url_for('trekker.trek_details',trek_id=trek.id) }}"
+class="btn btn-custom">
 
 View Details
 
@@ -49,18 +196,26 @@ View Details
 
 </div>
 
-{% endfor %}
+</div>
+
+</div>
 
 </div>
 
 {% else %}
 
+<div class="col-12">
+
 <div class="alert alert-warning">
 
-No approved treks available.
+No treks available.
 
 </div>
 
-{% endif %}
+</div>
+
+{% endfor %}
+
+</div>
 
 {% endblock %}

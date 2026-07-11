@@ -2,6 +2,14 @@
 <html lang="en">
 
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Trekking Management{% endblock %}</title>
@@ -13,37 +21,77 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
-<body class="bg-light">
+<body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+    <nav class="navbar navbar-expand-lg custom-navbar">
 
-    <div class="container">
+<div class="container">
 
-        <a class="navbar-brand fw-bold" href="/">Trekking Management</a>
+{% if current_user.is_authenticated %}
 
-        <div class="ms-auto">
+    {% if current_user.role=="admin" %}
 
-            {% if current_user.is_authenticated %}
+        <a class="navbar-brand fw-bold"
+        href="{{ url_for('admin.dashboard') }}">
 
-            <div class="d-flex justify-content-between mb-3">
+        🏔 PeakTrail
 
-   
+        </a>
 
-    <a href="{{ url_for('auth.logout') }}"
-       class="btn btn-danger">
+    {% elif current_user.role=="staff" %}
 
-        Logout
+        <a class="navbar-brand fw-bold"
+        href="{{ url_for('staff.dashboard') }}">
 
-    </a>
+        🏔 PeakTrail
+
+        </a>
+
+    {% elif current_user.role=="trekker" %}
+
+        <a class="navbar-brand fw-bold"
+        href="{{ url_for('trekker.dashboard') }}">
+
+        🏔 PeakTrail
+
+        </a>
+
+    {% endif %}
+
+{% else %}
+
+<a class="navbar-brand fw-bold"
+href="{{ url_for('home') }}">
+
+🏔 PeakTrail
+
+</a>
+
+{% endif %}
+
+<div class="ms-auto d-flex align-items-center">
+
+{% if current_user.is_authenticated %}
+
+<span class="welcome-text">
+
+{{ current_user.name }}
+
+</span>
+
+<a href="{{ url_for('auth.logout') }}"
+class="btn btn-custom ms-3">
+
+Logout
+
+</a>
+
+{% endif %}
 
 </div>
 
-            {% endif %}
-
-        </div>
-
-    </div>
+</div>
 
 </nav>
 
@@ -52,14 +100,14 @@
 
         <!-- Flash Messages -->
         {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-                {% endfor %}
-            {% endif %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
         {% endwith %}
 
         <!-- Page Content -->
