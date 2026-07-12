@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+Update Slots
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow p-4">
+
+<h2>{{ trek.trek_name }}</h2>
+
+<form method="POST">
+
+<div class="mb-3">
+
+<label>Available Slots</label>
+
+<input
+type="number"
+name="available_slots"
+class="form-control"
+value="{{ trek.available_slots }}"
+min="0">
+
+</div>
+
+<button
+    type="submit"
+    class="btn btn-success">
+    Save Changes
+</button>
+
+</form>
+
+</div>
+
+{% endblock %}
