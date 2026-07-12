@@ -14,7 +14,7 @@ from routes.trekker import trekker
 
 
 app = Flask(__name__)
-
+app.config["SECRET_KEY"] = "trekking_management_secret_key"
 app.config.from_object(Config)
 
 db.init_app(app)

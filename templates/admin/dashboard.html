@@ -6,7 +6,7 @@ Admin Dashboard
 
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="d-flex justify-content-between align-items-center">
     <div>
         <h2 class="fw-bold mb-1">Admin Dashboard</h2>
         <p class="text-muted">Manage treks, staff and bookings</p>
@@ -128,7 +128,7 @@ Admin Dashboard
     <div class="col-lg-3 col-md-6">
         <a href="{{ url_for('admin.manage_staff') }}" class="text-decoration-none">
             <div class="dashboard-card">
-                <h1>Staff</h1>
+                <h1>👨‍💼</h1>
                 <h5>Manage Staff</h5>
             </div>
         </a>
@@ -137,7 +137,7 @@ Admin Dashboard
     <div class="col-lg-3 col-md-6">
         <a href="{{ url_for('admin.view_treks') }}" class="text-decoration-none">
             <div class="dashboard-card">
-                <h1>Treks</h1>
+                <h1>🗻</h1>
                 <h5>View Treks</h5>
             </div>
         </a>
@@ -146,7 +146,7 @@ Admin Dashboard
     <div class="col-lg-3 col-md-6">
         <a href="{{ url_for('admin.manage_users') }}" class="text-decoration-none">
             <div class="dashboard-card">
-                <h1>Users</h1>
+                <h1>👨‍💼</h1>
                 <h5>Manage Users</h5>
             </div>
         </a>
@@ -155,7 +155,7 @@ Admin Dashboard
     <div class="col-lg-3 col-md-6">
         <a href="{{ url_for('admin.view_bookings') }}" class="text-decoration-none">
             <div class="dashboard-card">
-                <h1>List</h1>
+                <h1>📋</h1>
                 <h5>Bookings</h5>
             </div>
         </a>
@@ -164,7 +164,7 @@ Admin Dashboard
     <div class="col-lg-3 col-md-6">
         <a href="{{ url_for('admin.search') }}" class="text-decoration-none">
             <div class="dashboard-card">
-                <h1>Find</h1>
+                <h1>�</h1>
                 <h5>Search</h5>
             </div>
         </a>
@@ -175,64 +175,64 @@ Admin Dashboard
 
 {% block scripts %}
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const bookingChart = {{ booking_chart|tojson }};
-    const trekChart = {{ trek_chart|tojson }};
+    document.addEventListener('DOMContentLoaded', function () {
+        const bookingChart = {{ booking_chart | tojson }};
+        const trekChart = {{ trek_chart | tojson }};
 
-    const bookingCtx = document.getElementById('bookingChart');
-    if (bookingCtx && window.Chart) {
-        new Chart(bookingCtx, {
-            type: 'pie',
-            data: {
-                labels: bookingChart.labels,
-                datasets: [{
-                    data: bookingChart.data,
-                    backgroundColor: ['#556B2F', '#0d6efd', '#dc3545'],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
-    }
-
-    const trekCtx = document.getElementById('trekChart');
-    if (trekCtx && window.Chart) {
-        new Chart(trekCtx, {
-            type: 'bar',
-            data: {
-                labels: trekChart.labels,
-                datasets: [{
-                    label: 'Treks',
-                    data: trekChart.data,
-                    backgroundColor: ['#6c757d', '#198754', '#ffc107', '#0d6efd', '#dc3545'],
-                    borderRadius: 6
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            precision: 0
+        const bookingCtx = document.getElementById('bookingChart');
+        if (bookingCtx && window.Chart) {
+            new Chart(bookingCtx, {
+                type: 'pie',
+                data: {
+                    labels: bookingChart.labels,
+                    datasets: [{
+                        data: bookingChart.data,
+                        backgroundColor: ['#556B2F', '#0d6efd', '#dc3545'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
                         }
                     }
+                }
+            });
+        }
+
+        const trekCtx = document.getElementById('trekChart');
+        if (trekCtx && window.Chart) {
+            new Chart(trekCtx, {
+                type: 'bar',
+                data: {
+                    labels: trekChart.labels,
+                    datasets: [{
+                        label: 'Treks',
+                        data: trekChart.data,
+                        backgroundColor: ['#6c757d', '#198754', '#ffc107', '#0d6efd', '#dc3545'],
+                        borderRadius: 6
+                    }]
                 },
-                plugins: {
-                    legend: {
-                        display: false
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                precision: 0
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
                     }
                 }
-            }
-        });
-    }
-});
+            });
+        }
+    });
 </script>
 {% endblock %}
