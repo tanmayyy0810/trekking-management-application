@@ -122,3 +122,95 @@ def update_status(trek_id):
         "staff/update_status.html",
         trek=trek
     )
+
+@staff.route("/staff/participants/<int:trek_id>")
+@login_required
+def view_participants(trek_id):
+
+    if current_user.role != "staff":
+        flash("Access Denied!", "danger")
+        return redirect(url_for("home"))
+
+    profile = StaffProfile.query.filter_by(
+        user_id=current_user.id
+    ).first()
+
+    trek = Trek.query.get_or_404(trek_id)
+
+    # Ensure only assigned staff can view
+    if trek.assigned_staff_id != profile.id:
+        flash("You are not assigned to this trek.", "danger")
+        return redirect(url_for("staff.dashboard"))
+
+    bookings = Booking.query.filter_by(
+        trek_id=trek.id
+    ).all()
+
+    return render_template(
+        "staff/participants.html",
+        trek=trek,
+        bookings=bookings
+    )
+
+@staff.route("/staff/complete-booking/<int:booking_id>")
+@login_required
+def complete_booking(booking_id):
+
+    if current_user.role != "staff":
+        flash("Access Denied!", "danger")
+        return redirect(url_for("home"))
+
+    booking = Booking.query.get_or_404(booking_id)
+
+    profile = StaffProfile.query.filter_by(
+        user_id=current_user.id
+    ).first()
+
+    if booking.trek.assigned_staff_id != profile.id:
+        flash("You are not assigned to this trek.", "danger")
+        return redirect(url_for("staff.dashboard"))
+
+    booking.booking_status = "Completed"
+
+    db.session.commit()
+
+    flash("Participant marked as completed.", "success")
+
+    return redirect(
+        url_for(
+            "staff.view_participants",
+            trek_id=booking.trek.id
+        )
+    )
+
+@staff.route("/staff/complete-payment/<int:booking_id>")
+@login_required
+def complete_payment(booking_id):
+
+    if current_user.role != "staff":
+        flash("Access Denied!", "danger")
+        return redirect(url_for("home"))
+
+    booking = Booking.query.get_or_404(booking_id)
+
+    profile = StaffProfile.query.filter_by(
+        user_id=current_user.id
+    ).first()
+
+    # Ensure only assigned staff can update payment
+    if booking.trek.assigned_staff_id != profile.id:
+        flash("You are not assigned to this trek.", "danger")
+        return redirect(url_for("staff.dashboard"))
+
+    booking.payment_status = "Paid"
+
+    db.session.commit()
+
+    flash("Payment marked as completed.", "success")
+
+    return redirect(
+        url_for(
+            "staff.view_participants",
+            trek_id=booking.trek.id
+        )
+    )

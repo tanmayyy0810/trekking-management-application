@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 
+from models import booking
 from models.trek import Trek
 from models.booking import Booking
 from models import db
@@ -84,6 +85,8 @@ def my_bookings():
 
     bookings = Booking.query.filter_by(
         user_id=current_user.id
+    ).order_by(
+        Booking.booking_date.desc()
     ).all()
 
     return render_template(
@@ -127,9 +130,10 @@ def book_trek(trek_id):
         return redirect(url_for("trekker.view_treks"))
 
     # Already booked?
-    existing = Booking.query.filter_by(
-        user_id=current_user.id,
-        trek_id=trek.id
+    existing = Booking.query.filter(
+        Booking.user_id == current_user.id,
+        Booking.trek_id == trek.id,
+        Booking.booking_status != "Cancelled"
     ).first()
 
     if existing:
@@ -172,7 +176,7 @@ def cancel_booking(booking_id):
 
     trek.available_slots += 1
 
-    db.session.delete(booking)
+    booking.booking_status = "Cancelled"
 
     db.session.commit()
 

@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}
+Participants
+{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">
+{{ trek.trek_name }} Participants
+</h2>
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<table class="table table-hover">
+
+<thead class="table-success">
+
+<tr>
+
+<th>ID</th>
+<th>Name</th>
+<th>Email</th>
+<th>Booking Date</th>
+<th>Booking Status</th>
+<th>Payment</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for booking in bookings %}
+
+<tr>
+
+<td>{{ booking.user.id }}</td>
+
+<td>{{ booking.user.name }}</td>
+
+<td>{{ booking.user.email }}</td>
+
+<td>{{ booking.booking_date.strftime("%d-%m-%Y") }}</td>
+
+<td>
+
+{% if booking.booking_status == "Booked" %}
+
+<span class="badge bg-success">
+Booked
+</span>
+
+<br><br>
+
+<a href="{{ url_for('staff.complete_booking', booking_id=booking.id) }}"
+class="btn btn-primary btn-sm">
+
+Mark Completed
+
+</a>
+
+{% elif booking.booking_status == "Completed" %}
+
+<span class="badge bg-info">
+
+Completed
+
+</span>
+
+{% else %}
+
+<span class="badge bg-danger">
+
+Cancelled
+
+</span>
+
+{% endif %}
+
+</td>
+
+<td>
+
+{% if booking.payment_status == "Pending" %}
+
+<span class="badge bg-warning text-dark">
+Pending
+</span>
+
+<br><br>
+
+<a href="{{ url_for('staff.complete_payment', booking_id=booking.id) }}"
+class="btn btn-success btn-sm">
+
+Mark Paid
+
+</a>
+
+{% else %}
+
+<span class="badge bg-success">
+Paid
+</span>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+{% else %}
+
+<tr>
+
+<td colspan="6" class="text-center">
+
+No Participants Yet
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+{% endblock %}

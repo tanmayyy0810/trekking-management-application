@@ -25,6 +25,7 @@ My Bookings
 <th>Booking Date</th>
 <th>Status</th>
 <th>Payment</th>
+<th>Trek Status</th>
 <th>Action</th>
 
 </tr>
@@ -43,19 +44,106 @@ My Bookings
 
 <td>{{ booking.booking_date.strftime("%d-%m-%Y") }}</td>
 
-<td>{{ booking.booking_status }}</td>
+<td>
 
-<td>{{ booking.payment_status }}</td>
+{% if booking.booking_status=="Booked" %}
+
+<span class="badge bg-success">
+Booked
+</span>
+
+{% elif booking.booking_status=="Completed" %}
+
+<span class="badge bg-primary">
+Completed
+</span>
+
+{% else %}
+
+<span class="badge bg-danger">
+Cancelled
+</span>
+
+{% endif %}
+
+</td>
 
 <td>
 
-<a
-href="{{ url_for('trekker.cancel_booking', booking_id=booking.id) }}"
+{% if booking.payment_status=="Paid" %}
+
+<span class="badge bg-success">
+
+Paid
+
+</span>
+
+{% else %}
+
+<span class="badge bg-warning text-dark">
+
+Pending
+
+</span>
+
+{% endif %}
+
+</td>
+<td>
+
+{% if booking.trek.status=="Open" %}
+
+<span class="badge bg-success">
+
+Open
+
+</span>
+
+{% elif booking.trek.status=="Ongoing" %}
+
+<span class="badge bg-warning text-dark">
+
+Ongoing
+
+</span>
+
+{% elif booking.trek.status=="Completed" %}
+
+<span class="badge bg-primary">
+
+Completed
+
+</span>
+
+{% else %}
+
+<span class="badge bg-danger">
+
+Closed
+
+</span>
+
+{% endif %}
+
+</td>
+
+<td>
+
+{% if booking.booking_status=="Booked" %}
+
+<a href="{{ url_for('trekker.cancel_booking',
+booking_id=booking.id) }}"
 class="btn btn-danger btn-sm">
 
 Cancel
 
 </a>
+
+{% else %}
+
+-
+
+{% endif %}
 
 </td>
 

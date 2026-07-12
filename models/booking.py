@@ -33,6 +33,7 @@ class Booking(db.Model):
         db.String(20),
         default="Pending"
     )
+    
 
     def __repr__(self):
         return f"<Booking {self.id}>"
