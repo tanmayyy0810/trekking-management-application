@@ -16,31 +16,49 @@ Update Trek Status
 
 <label>Status</label>
 
+<div class="mb-3">
+
+<label class="form-label">Trek Status</label>
+
 <select
 name="status"
 class="form-select">
 
-{% for status in ["Open","Closed","Started","Ongoing","Completed"] %}
-
-<option
-value="{{ status }}"
-{% if trek.status==status %}selected{% endif %}>
-
-{{ status }}
-
+<option value="Pending"
+{% if trek.status=="Pending" %}selected{% endif %}>
+Pending
 </option>
 
-{% endfor %}
+<option value="Open"
+{% if trek.status=="Open" %}selected{% endif %}>
+Open
+</option>
+
+<option value="Ongoing"
+{% if trek.status=="Ongoing" %}selected{% endif %}>
+Ongoing
+</option>
+
+<option value="Completed"
+{% if trek.status=="Completed" %}selected{% endif %}>
+Completed
+</option>
+
+<option value="Closed"
+{% if trek.status=="Closed" %}selected{% endif %}>
+Closed
+</option>
 
 </select>
 
 </div>
 
 <button class="btn btn-custom">
-
 Update Status
-
 </button>
+
+</div>
+
 
 </form>
 

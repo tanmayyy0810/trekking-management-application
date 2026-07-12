@@ -111,6 +111,15 @@ def update_status(trek_id):
     if request.method == "POST":
 
         trek.status = request.form["status"]
+        if trek.status == "Completed":
+
+            bookings = Booking.query.filter_by(
+                trek_id=trek.id,
+                booking_status="Booked"
+            ).all()
+
+            for booking in bookings:
+                booking.booking_status = "Completed"
 
         db.session.commit()
 

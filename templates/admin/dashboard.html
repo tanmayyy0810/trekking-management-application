@@ -7,181 +7,232 @@ Admin Dashboard
 {% block content %}
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-
     <div>
         <h2 class="fw-bold mb-1">Admin Dashboard</h2>
         <p class="text-muted">Manage treks, staff and bookings</p>
     </div>
 
-    <a href="{{ url_for('admin.create_trek') }}"
-       class="btn btn-custom">
+    <a href="{{ url_for('admin.create_trek') }}" class="btn btn-custom">
         + Create Trek
     </a>
-
 </div>
 
 <div class="row g-4">
-
     <div class="col-lg-3 col-md-6">
-
         <div class="dashboard-card">
-
             <h5>Total Treks</h5>
-
             <h2>{{ total_treks }}</h2>
-
-            <small class="text-muted">
-                Active Adventures
-            </small>
-
+            <small class="text-muted">Active Adventures</small>
         </div>
-
     </div>
 
     <div class="col-lg-3 col-md-6">
-
         <div class="dashboard-card">
-
             <h5>Trekkers</h5>
-
             <h2>{{ total_users }}</h2>
-
-            <small class="text-muted">
-                Registered Users
-            </small>
-
+            <small class="text-muted">Registered Users</small>
         </div>
-
     </div>
 
     <div class="col-lg-3 col-md-6">
-
         <div class="dashboard-card">
-
             <h5>Staff</h5>
-
             <h2>{{ total_staff }}</h2>
-
-            <small class="text-muted">
-                Trek Leaders
-            </small>
-
+            <small class="text-muted">Trek Leaders</small>
         </div>
-
     </div>
 
     <div class="col-lg-3 col-md-6">
-
         <div class="dashboard-card">
-
             <h5>Bookings</h5>
-
             <h2>{{ total_bookings }}</h2>
-
-            <small class="text-muted">
-                Confirmed Bookings
-            </small>
-
+            <small class="text-muted">All Booking Records</small>
         </div>
-
     </div>
-
 </div>
 
-<hr class="my-6">
+<div class="row g-4 my-4">
+    <div class="col-md-3">
+        <div class="card shadow text-center border-secondary p-3">
+            <h5>Pending Treks</h5>
+            <h2>{{ pending_treks }}</h2>
+        </div>
+    </div>
 
-<h4 class="fw-bold mb-5">
-Quick Actions
-</h4>
+    <div class="col-md-3">
+        <div class="card shadow text-center border-success p-3">
+            <h5>Open Treks</h5>
+            <h2>{{ open_treks }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow text-center border-warning p-3">
+            <h5>Ongoing</h5>
+            <h2>{{ ongoing_treks }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow text-center border-primary p-3">
+            <h5>Completed</h5>
+            <h2>{{ completed_treks }}</h2>
+        </div>
+    </div>
+</div>
 
 <div class="row g-4">
+    <div class="col-md-4">
+        <div class="card shadow text-center p-3">
+            <h5>Paid Bookings</h5>
+            <h2>{{ paid_bookings }}</h2>
+        </div>
+    </div>
 
+    <div class="col-md-4">
+        <div class="card shadow text-center p-3">
+            <h5>Pending Payments</h5>
+            <h2>{{ pending_payments }}</h2>
+        </div>
+    </div>
 
-<div class="col-lg-3 col-md-6">
-
-<a href="{{ url_for('admin.manage_staff') }}"
-class="text-decoration-none">
-
-<div class="dashboard-card">
-
-<h1>👨‍💼</h1>
-
-<h5>Manage Staff</h5>
-
+    <div class="col-md-4">
+        <div class="card shadow text-center bg-success text-white p-3">
+            <h5>Total Revenue</h5>
+            <h2>Rs. {{ "%.2f"|format(total_revenue) }}</h2>
+        </div>
+    </div>
 </div>
 
-</a>
+<div class="row mt-5 g-4">
+    <div class="col-md-6">
+        <div class="card shadow p-4">
+            <h4 class="mb-3">Booking Status</h4>
+            <canvas id="bookingChart"></canvas>
+        </div>
+    </div>
 
+    <div class="col-md-6">
+        <div class="card shadow p-4">
+            <h4 class="mb-3">Trek Status</h4>
+            <canvas id="trekChart"></canvas>
+        </div>
+    </div>
 </div>
 
-<div class="col-lg-3 col-md-6">
+<hr class="my-5">
 
-<a href="{{ url_for('admin.view_treks') }}"
-class="text-decoration-none">
+<h4 class="fw-bold mb-4">Quick Actions</h4>
 
-<div class="dashboard-card">
+<div class="row g-4">
+    <div class="col-lg-3 col-md-6">
+        <a href="{{ url_for('admin.manage_staff') }}" class="text-decoration-none">
+            <div class="dashboard-card">
+                <h1>Staff</h1>
+                <h5>Manage Staff</h5>
+            </div>
+        </a>
+    </div>
 
-<h1>🗻</h1>
+    <div class="col-lg-3 col-md-6">
+        <a href="{{ url_for('admin.view_treks') }}" class="text-decoration-none">
+            <div class="dashboard-card">
+                <h1>Treks</h1>
+                <h5>View Treks</h5>
+            </div>
+        </a>
+    </div>
 
-<h5>View Treks</h5>
+    <div class="col-lg-3 col-md-6">
+        <a href="{{ url_for('admin.manage_users') }}" class="text-decoration-none">
+            <div class="dashboard-card">
+                <h1>Users</h1>
+                <h5>Manage Users</h5>
+            </div>
+        </a>
+    </div>
 
+    <div class="col-lg-3 col-md-6">
+        <a href="{{ url_for('admin.view_bookings') }}" class="text-decoration-none">
+            <div class="dashboard-card">
+                <h1>List</h1>
+                <h5>Bookings</h5>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+        <a href="{{ url_for('admin.search') }}" class="text-decoration-none">
+            <div class="dashboard-card">
+                <h1>Find</h1>
+                <h5>Search</h5>
+            </div>
+        </a>
+    </div>
 </div>
 
-</a>
+{% endblock %}
 
-</div>
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const bookingChart = {{ booking_chart|tojson }};
+    const trekChart = {{ trek_chart|tojson }};
 
-<div class="col-lg-3 col-md-6">
+    const bookingCtx = document.getElementById('bookingChart');
+    if (bookingCtx && window.Chart) {
+        new Chart(bookingCtx, {
+            type: 'pie',
+            data: {
+                labels: bookingChart.labels,
+                datasets: [{
+                    data: bookingChart.data,
+                    backgroundColor: ['#556B2F', '#0d6efd', '#dc3545'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    }
 
-<a href="{{ url_for('admin.manage_users') }}" 
-
-class="text-decoration-none">
-
-<div class="dashboard-card">
-
-<h1>👨‍💼</h1>
-
-<h5>Manage Users</h5>
-
-</div>
-
-</a>
-
-</div>
-<div class="col-lg-3 col-md-6">
-
-<a href="{{ url_for('admin.view_bookings') }}"
-class="text-decoration-none">
-
-<div class="dashboard-card">
-
-<h1>📋</h1>
-
-<h5>Bookings</h5>
-
-</div>
-
-</a>
-
-</div>
-<div class="col-lg-3 col-md-6">
-
-<a href="{{ url_for('admin.search') }}" 
-
-class="text-decoration-none">
-
-<div class="dashboard-card">
-
-<h1>�</h1>
-
-<h5>Search</h5>
-
-</div>
-
-</a>
-
-</div>
-
-</div>
-
+    const trekCtx = document.getElementById('trekChart');
+    if (trekCtx && window.Chart) {
+        new Chart(trekCtx, {
+            type: 'bar',
+            data: {
+                labels: trekChart.labels,
+                datasets: [{
+                    label: 'Treks',
+                    data: trekChart.data,
+                    backgroundColor: ['#6c757d', '#198754', '#ffc107', '#0d6efd', '#dc3545'],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
 {% endblock %}
