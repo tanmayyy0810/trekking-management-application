@@ -82,6 +82,11 @@ transform:scale(1.05);
 
 }
 
+/*bg colors*/
+.bg-custom {
+    background-color: #556B2F; /* Olive Green */
+}
+
 /* Buttons */
 
 .btn-custom{

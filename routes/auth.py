@@ -9,9 +9,61 @@ auth = Blueprint("auth", __name__)
 
 # ---------------- Home Pages ----------------
 
-@auth.route("/login")
-def choose_login():
-    return render_template("auth/choose_login.html")
+# @auth.route("/login")
+# def choose_login():
+#     return render_template("auth/choose_login.html")
+@auth.route("/login", methods=["GET", "POST"])
+def login():
+
+    if request.method == "POST":
+
+        email = request.form["email"].strip().lower()
+        password = request.form["password"]
+
+        user = User.query.filter_by(email=email).first()
+
+        if user and user.check_password(password):
+
+            # Blacklist check
+            if user.is_blacklisted:
+                flash(
+                    "Your account has been blacklisted by the administrator.",
+                    "danger"
+                )
+                return redirect(url_for("auth.login"))
+
+            # Staff approval check
+            if user.role == "staff":
+
+                profile = StaffProfile.query.filter_by(
+                    user_id=user.id
+                ).first()
+
+                if profile.approval_status != "Approved":
+
+                    flash(
+                        "Your account is awaiting Admin approval.",
+                        "warning"
+                    )
+
+                    return redirect(url_for("auth.login"))
+
+            login_user(user)
+
+            flash("Login successful.", "success")
+
+            if user.role == "admin":
+                return redirect(url_for("admin.dashboard"))
+
+            elif user.role == "staff":
+                return redirect(url_for("staff.dashboard"))
+
+            else:
+                return redirect(url_for("trekker.dashboard"))
+
+        flash("Invalid email or password.", "danger")
+
+    return render_template("auth/login.html")
 
 
 @auth.route("/register")
@@ -21,120 +73,120 @@ def choose_register():
 
 # ---------------- Login Pages ----------------
 
-@auth.route("/login/admin", methods=["GET", "POST"])
-def admin_login():
+# @auth.route("/login/admin", methods=["GET", "POST"])
+# def admin_login():
 
-    if request.method == "POST":
+#     if request.method == "POST":
 
-        email = request.form["email"].strip().lower()
-        password = request.form["password"]
+#         email = request.form["email"].strip().lower()
+#         password = request.form["password"]
 
-        admin = User.query.filter_by(
-            email=email,
-            role="admin"
-        ).first()
+#         admin = User.query.filter_by(
+#             email=email,
+#             role="admin"
+#         ).first()
 
-        if admin and admin.check_password(password):
+#         if admin and admin.check_password(password):
 
-            login_user(admin)
+#             login_user(admin)
 
-            flash("Welcome Admin!", "success")
+#             flash("Welcome Admin!", "success")
 
-            return redirect(url_for("admin.dashboard"))   # Permanent
+#             return redirect(url_for("admin.dashboard"))   # Permanent
 
-        flash("Invalid admin credentials.", "danger")
+#         flash("Invalid admin credentials.", "danger")
 
-    return render_template("auth/admin_login.html")
+#     return render_template("auth/admin_login.html")
 
 
-@auth.route("/login/staff", methods=["GET", "POST"])
-def staff_login():
+# @auth.route("/login/staff", methods=["GET", "POST"])
+# def staff_login():
 
-    if request.method == "POST":
+#     if request.method == "POST":
 
-        email = request.form["email"].strip().lower()
-        password = request.form["password"]
+#         email = request.form["email"].strip().lower()
+#         password = request.form["password"]
 
-        user = User.query.filter_by(
-            email=email,
-            role="staff"
-        ).first()
+#         user = User.query.filter_by(
+#             email=email,
+#             role="staff"
+#         ).first()
 
-        if user and user.check_password(password):
+#         if user and user.check_password(password):
 
-            # Check if user is blacklisted
-            if user.is_blacklisted:
+#             # Check if user is blacklisted
+#             if user.is_blacklisted:
 
-                flash(
-                    "Your account has been blacklisted. Please contact the administrator.",
-                    "danger"
-                )
+#                 flash(
+#                     "Your account has been blacklisted. Please contact the administrator.",
+#                     "danger"
+#                 )
 
-                return redirect(url_for("auth.staff_login"))
+#                 return redirect(url_for("auth.staff_login"))
 
-            profile = StaffProfile.query.filter_by(
-                user_id=user.id
-            ).first()
+#             profile = StaffProfile.query.filter_by(
+#                 user_id=user.id
+#             ).first()
 
-            if profile.approval_status != "Approved":
+#             if profile.approval_status != "Approved":
 
-                flash(
-                    "Your account is awaiting Admin approval.",
-                    "warning"
-                )
-                return redirect(url_for("auth.staff_login"))
+#                 flash(
+#                     "Your account is awaiting Admin approval.",
+#                     "warning"
+#                 )
+#                 return redirect(url_for("auth.staff_login"))
             
 
-            login_user(user)
+#             login_user(user)
 
-            flash("Login successful.", "success")
+#             flash("Login successful.", "success")
 
-            return redirect(url_for("staff.dashboard"))   # permanent
+#             return redirect(url_for("staff.dashboard"))   # permanent
 
-        flash("Invalid email or password.", "danger")
+#         flash("Invalid email or password.", "danger")
 
-    return render_template("auth/staff_login.html")
+#     return render_template("auth/staff_login.html")
 
 
-@auth.route("/login/trekker", methods=["GET", "POST"])
-def trekker_login():
+# @auth.route("/login/trekker", methods=["GET", "POST"])
+# def trekker_login():
 
-    if request.method == "POST":
+#     if request.method == "POST":
 
-        email = request.form["email"].strip().lower()
+#         email = request.form["email"].strip().lower()
 
-        password = request.form["password"]
+#         password = request.form["password"]
 
-        user = User.query.filter_by(
+#         user = User.query.filter_by(
 
-            email=email,
+#             email=email,
 
-            role="trekker"
+#             role="trekker"
 
-        ).first()
+#         ).first()
         
 
 
 
-        if user and user.check_password(password):
-            if user.is_blacklisted:
+#         if user and user.check_password(password):
+#             if user.is_blacklisted:
 
-                flash(
-                    "Your account has been blacklisted by the administrator.",
-                    "danger"
-                )
+#                 flash(
+#                     "Your account has been blacklisted by the administrator.",
+#                     "danger"
+#                 )
 
-                return redirect(url_for("auth.trekker_login"))
+#                 return redirect(url_for("auth.trekker_login"))
 
-            login_user(user)
+#             login_user(user)
 
-            flash("Welcome! Login successful.", "success")
+#             flash("Welcome! Login successful.", "success")
 
-            return redirect(url_for("trekker.dashboard"))
+#             return redirect(url_for("trekker.dashboard"))
 
-        flash("Invalid email or password.", "danger")
+#         flash("Invalid email or password.", "danger")
 
-    return render_template("auth/trekker_login.html")
+#     return render_template("auth/trekker_login.html")
 
 
 # ---------------- Register Pages ----------------
@@ -189,7 +241,9 @@ def staff_register():
             "success"
         )
 
-        return redirect(url_for("auth.staff_login"))
+        # return redirect(url_for("auth.staff_login"))
+        return redirect(url_for("auth.login"))
+    
 
     return render_template("auth/staff_register.html")
 
@@ -239,7 +293,8 @@ def trekker_register():
 
         flash("Registration successful. Please login.", "success")
 
-        return redirect(url_for("auth.trekker_login"))
+        # return redirect(url_for("auth.trekker_login"))
+        return redirect(url_for("auth.login"))
 
     return render_template("auth/trekker_register.html")
 
@@ -252,4 +307,4 @@ def logout():
 
     flash("You have been logged out successfully.", "success")
 
-    return redirect(url_for("home"))
+    return redirect(url_for("auth.login"))
