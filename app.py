@@ -31,7 +31,7 @@ app.register_blueprint(trekker)
 
 @app.route("/")
 def home():
-    return render_template("auth.login")
+    return render_template("home.html")
 
 
 

@@ -43,10 +43,16 @@ class Trek(db.Model):
         nullable=True
     )
 
+    # bookings = db.relationship(
+    #     "Booking",
+    #     backref="trek",
+    #     lazy=True
+    # )
     bookings = db.relationship(
         "Booking",
         backref="trek",
-        lazy=True
+        lazy=True,
+        cascade="all, delete-orphan"
     )
 
     def __repr__(self):

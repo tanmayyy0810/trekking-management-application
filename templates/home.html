@@ -1,36 +1,43 @@
 {% extends "base.html" %}
 
 {% block title %}
-Home
+Trekking Management System
 {% endblock %}
 
 {% block content %}
 
-<div class="hero text-center">
+<div class="container">
 
-    <h1 class="display-4">
-        Trekking Management System
-    </h1>
+    <div class="row justify-content-center align-items-center"
+         style="min-height:80vh;">
 
-    <p class="text-muted mt-3">
-        Plan • Manage • Explore
-    </p>
+        <div class="col-lg-8 text-center">
 
-    <div class="mt-5">
+            <h1 class="display-3 fw-bold text-custom">
+                Trekking Management System
+            </h1>
 
-        <a href="{{ url_for('auth.login') }}"
-           class="btn btn-success btn-lg me-3">
+            <p class="lead mt-4">
 
-            Login
+                Plan • Manage • Explore
 
-        </a>
+            </p>
 
-        <a href="{{ url_for('auth.choose_register') }}"
-           class="btn btn-outline-success btn-lg">
+            <p class="text-muted mt-3">
 
-            Register
+                A role-based web application for managing treks,
+                staff operations and online bookings efficiently.
 
-        </a>
+            </p>
+
+            <a href="{{ url_for('auth.login') }}"
+               class="btn btn-custom btn-lg mt-4 px-5">
+
+                Get Started
+
+            </a>
+
+        </div>
 
     </div>
 
